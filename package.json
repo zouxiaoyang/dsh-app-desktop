@@ -1,0 +1,73 @@
+{
+  "name": "dsh-app",
+  "productName": "DSH",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DeepSeek Harness 桌面壳（Electron）—— 内嵌 dsh web 服务，托盘常驻，自用分发",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "stage": "node scripts/stage-server.mjs",
+    "build": "node scripts/stage-server.mjs && electron-builder --mac dir",
+    "build:dmg": "node scripts/stage-server.mjs && electron-builder --mac dmg",
+    "sign": "bash scripts/ad-hoc-sign.sh"
+  },
+  "devDependencies": {
+    "electron": "^37.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.xiaotuc.dsh",
+    "productName": "DSH",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "assets/icon.icns"
+    ],
+    "extraResources": [
+      {
+        "from": "staging",
+        "to": ".",
+        "filter": [
+          "**/*",
+          "!**/*.map"
+        ]
+      },
+      {
+        "from": "assets/icon.png",
+        "to": "icon.png"
+      }
+    ],
+    "mac": {
+      "target": [
+        "dir",
+        "dmg"
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns",
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "DSH",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "afterPack": "scripts/after-pack.mjs"
+  }
+}

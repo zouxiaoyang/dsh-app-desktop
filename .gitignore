@@ -1,0 +1,17 @@
+# 构建产物（700MB+，不提交）
+staging/
+dist/
+node_modules/
+
+# 系统/日志
+.DS_Store
+*.log
+*.err.log
+
+# 备份
+*.bak*
+*.bak-*
+
+# 本地配置
+.env
+.env.local

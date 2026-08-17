@@ -35,7 +35,9 @@ function run(cmd, cwd = REPO) {
   execSync(cmd, {
     cwd,
     stdio: 'inherit',
-    env: { ...process.env, PATH: '/Users/xiaotuc/.npm-global/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin' },
+    // 继承调用方 PATH（本机终端 / GitHub Actions runner 都自带 node/npm），
+    // 不硬编码任何机器特定路径
+    env: { ...process.env, PATH: process.env.PATH },
   })
 }
 

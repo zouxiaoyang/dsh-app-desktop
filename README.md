@@ -44,6 +44,13 @@ dsh-app/
 └── staging/                 # 打包输入（build 时生成，可随时重建，不入库）
 ```
 
+## 支持的平台
+
+- **当前发布包：Intel (x86_64) macOS 专用**（Mach-O x86_64）
+- Apple Silicon 用户：可用 Rosetta 2 转译运行（非原生）
+- 构建脚本按构建机器架构自动适配：在 Apple Silicon 上跑 `npm run build` 会产出
+  arm64 版；GitHub Actions 自动构建 arm64 的规划见 `.github/workflows/build.yml`
+
 ## 构建
 
 ```bash

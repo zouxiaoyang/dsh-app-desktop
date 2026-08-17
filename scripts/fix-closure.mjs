@@ -143,7 +143,7 @@ function bootOnce() {
       HOME: os.homedir(),
       LANG: 'en_US.UTF-8', LC_ALL: 'en_US.UTF-8', LC_CTYPE: 'en_US.UTF-8',
       TERM: 'xterm-256color', TMPDIR: '/tmp',
-      PATH: '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin',
+      PATH: process.env.PATH,
     }
     const node = process.env.CLOSURE_NODE || 'node'
     const child = spawn(node, ['lib/bin.js', 'web', '--port', '0'], {

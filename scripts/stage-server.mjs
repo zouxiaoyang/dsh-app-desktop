@@ -64,7 +64,7 @@ if (!skipBuild) {
   //   且可能重装运行中部署仓库的 node_modules）
   run('npm run build:lib')
   console.log('  vite build (apps/web) …')
-  run('/usr/local/bin/node ' + path.join(REPO, 'apps/web/node_modules/vite/bin/vite.js build'), path.join(REPO, 'apps/web'))
+  run('node ' + path.join(REPO, 'apps/web/node_modules/vite/bin/vite.js build'), path.join(REPO, 'apps/web'))
 }
 
 console.log('\n[2/5] pnpm deploy 生成运行闭包…')
@@ -79,17 +79,17 @@ fs.cpSync(path.join(REPO, 'apps/web/dist'), path.join(feDir, 'dist'), { recursiv
 console.log('  ✓ dsh-web-frontend (dist)')
 
 console.log('\n[4/5] fix-closure 按启动错误补齐 peer 依赖…')
-run('/usr/local/bin/node scripts/fix-closure.mjs ' + SERVER + ' 10', APP_DIR)
+run('node scripts/fix-closure.mjs ' + SERVER + ' 10', APP_DIR)
 
 console.log('\n[4b/5] 清理悬空符号链接（pnpm deploy 的 peer 死链；会挂 codesign --deep）…')
 const pruned = pruneBrokenSymlinks(SERVER)
 console.log(`  清理 ${pruned} 个悬空链接`)
 
 console.log('\n[4c/5] 修复顶层 @deepseek-ai 链接（pnpm deploy --legacy 不建顶层链接）…')
-run('/usr/local/bin/node scripts/fix-toplinks.mjs ' + SERVER, APP_DIR)
+run('node scripts/fix-toplinks.mjs ' + SERVER, APP_DIR)
 
 console.log('\n[4d/5] fix-closure 第二轮（顶层链接修复后暴露的深层运行时缺包）…')
-run('/usr/local/bin/node scripts/fix-closure.mjs ' + SERVER + ' 10', APP_DIR)
+run('node scripts/fix-closure.mjs ' + SERVER + ' 10', APP_DIR)
 
 function pruneBrokenSymlinks(dir) {
   let count = 0

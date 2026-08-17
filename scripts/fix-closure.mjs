@@ -145,7 +145,7 @@ function bootOnce() {
       TERM: 'xterm-256color', TMPDIR: '/tmp',
       PATH: '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin',
     }
-    const node = process.env.CLOSURE_NODE || '/usr/local/bin/node'
+    const node = process.env.CLOSURE_NODE || 'node'
     const child = spawn(node, ['lib/bin.js', 'web', '--port', '0'], {
       cwd: CLOSURE, env, stdio: ['ignore', 'pipe', 'pipe'],
     })
